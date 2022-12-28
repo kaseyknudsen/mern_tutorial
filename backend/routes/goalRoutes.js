@@ -1,5 +1,4 @@
 const express = require("express");
-const { update } = require("react-spring");
 const router = express.Router();
 const {
   getGoals,
@@ -8,16 +7,18 @@ const {
   deleteGoal,
 } = require("../controller/goalController");
 
+const { protect } = require('../middleware/authMiddleware')
+
 //this is a shorter way of handling it
 //router.route('/').get(getGoals).post(setGoal)
 //router.route('/:id').delete(deleteGoal).put(updateGoal)
 
-router.get("/", getGoals);
+router.get("/", protect, getGoals);
 
-router.post("/", setGoal);
+router.post("/", protect, setGoal);
 
-router.put("/:id", updateGoal);
+router.put("/:id", protect, updateGoal);
 
-router.delete("/:id", deleteGoal);
+router.delete("/:id", protect, deleteGoal);
 
 module.exports = router;
