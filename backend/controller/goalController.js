@@ -1,15 +1,19 @@
 const asyncHandler = require("express-async-handler");
+/*  asyncHandler is if we don't want to use try/catch with async. We
+can use the error handler instead. Wrap the entire function in asyncHandler*/
 
 const Goal = require("../models/goalModel");
+const User = require("../models/userModel");
+
 // @desc  Get goals
 //@route  Get/api/goals
 //access Private
-
 const getGoals = asyncHandler(async (req, res) => {
+  //req.user.id comes from the user model
   const goals = await Goal.find({ user: req.user.id });
   res.status(200).json(goals);
 });
-const User = require("../models/userModel");
+
 // @desc  Set goal
 //@route  Post/api/goals
 //access Private

@@ -15,7 +15,7 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("Please add all fields");
   }
 
-  //check if user exists
+  //check if user exists and throw error if user already exists
   const userExists = await User.findOne({ email });
 
   if (userExists) {
@@ -23,7 +23,7 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("User already exists");
   }
 
-  //hash password
+  //hash password. 10 is number of rounds
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -56,7 +56,8 @@ const loginUser = asyncHandler(async (req, res) => {
 
   //check for user email
   const user = await User.findOne({ email });
-
+/* we need to use bcrypt.compare since the password in the database will be hashed.
+password is the plaintext password sent in from the form*/
   if (user && (await bcrypt.compare(password, user.password))) {
     res.json({
       _id: user.id,
@@ -75,6 +76,7 @@ const loginUser = asyncHandler(async (req, res) => {
 //access Private
 
 const getMe = asyncHandler(async (req, res) => {
+  //we have access to the id once the user has logged in
   const { _id, name, email } = await User.findById(req.user.id);
   res.status(200).json({
     id: _id,
