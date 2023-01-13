@@ -78,11 +78,7 @@ password is the plaintext password sent in from the form*/
 const getMe = asyncHandler(async (req, res) => {
   //we have access to the id once the user has logged in
   const { _id, name, email } = await User.findById(req.user.id);
-  res.status(200).json({
-    id: _id,
-    name,
-    email,
-  });
+  res.status(200).json(req.user);
 });
 
 //generate a token
