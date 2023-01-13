@@ -29,12 +29,12 @@ function Login() {
       navigate("/");
     }
 
-    dispatch(reset);
+    dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const onChange = (e) => {
     setFormData((prevState) => ({
-      prevState,
+      ...prevState,
       [e.target.name]: e.target.value,
     }));
   };
