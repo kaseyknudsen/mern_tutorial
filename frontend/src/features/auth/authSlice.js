@@ -47,9 +47,15 @@ export const logout = createAsyncThunk("auth/logout", async () => {
   await authService.logout();
 });
 
+/* redux divides things up into 3: state (variables), actions (when something happens
+  to the variable in the redux state, reducer (does something when the action is called. The
+    reducer modifies the state)*/
+//createSlice is from redux toolkit that allows us to define our state, actions and reducers all in one place
+//auth is the name of the slice
 export const authSlice = createSlice({
   name: "auth",
   initialState,
+  //the reducers object contains everything that touches our state
   reducers: {
     reset: (state) => {
       state.isLoading = false;

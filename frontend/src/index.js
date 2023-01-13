@@ -8,7 +8,7 @@ import './index.css';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
-
+//Provider gives every child of the provider gets access to the variables in the store
 root.render(
   <React.StrictMode>
     <Provider store={store}>
